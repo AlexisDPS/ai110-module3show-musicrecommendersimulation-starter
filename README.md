@@ -18,16 +18,23 @@ Replace this paragraph with your own summary of what your version does.
 ## How The System Works
 
 Explain your design in plain language.
-
+My design is a simple content-based recommender. It compares the features of the songs to the preferences stored in a user's profile. Real world platforms might also use collaborative filtering and user behavior, but this system focuses on matching song attributes to what the user says they enjoy.
 Some prompts to answer:
 
 - What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
+  Each `Song` stores information such as its genre, mood, energy, valence, and tempo in beats per minute.
 - What information does your `UserProfile` store
+  The `UserProfile` stores the user's preferred genre, mood, energy level, valence, and tempo.
 - How does your `Recommender` compute a score for each song
+  The `Recommender` computes a score for each song by checking how closely the song matches the user's preferences. Genre and mood can receive points when they match exactly. Numerical features such as energy, valence, and tempo receive higher scores when their values are closer to the user's preferred values. The individual feature scores are then combined into one overall score.
 - How do you choose which songs to recommend
+  After every song receives a score, the recommender sorts the songs from highest score to lowest score. The highest-scoring songs are considered the best matches and are selected as the recommendations.
 
-You can include a simple diagram or bullet list if helpful.
+- Algorithm Recipe
+  My recommender compares each of the songs to the user's preferences. It gives 30 points for a matching genre and 25 points for a matching mood. It also gives up to 15 similarity points each for energy, valence, and tempo based on how close the song's values are to the user's preferred values. After calculating the total score for every song, the songs are sorted going from highest score to lowest score, and then the highest-scoring songs are recommended.
+
+- Potential Biases
+  This recommender might over prioritize genre and mood because exact matches receive a large part of the total score. It may also miss songs that are very similar but belong to a different genre or mood label. Since this is a content-based recommender, it does not learn from other users' listening habits or discover unexpected recommendations like collaborative filtering systems can.
 
 ---
 
@@ -41,6 +48,8 @@ You can include a simple diagram or bullet list if helpful.
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+
+   ```
 
 2. Install dependencies
 
@@ -71,15 +80,30 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+Top recommendations:
+
+1. Sunrise City (Score: 69.70)
+   Because: genre match (+30), mood match (+25), energy similarity (+14.7)
+----------------------------------------
+
+2. Gym Hero (Score: 43.05)
+   Because: genre match (+30), energy similarity (+13.1)
+----------------------------------------
+
+3. Rooftop Lights (Score: 39.40)
+   Because: mood match (+25), energy similarity (+14.4)
+----------------------------------------
+
+4. Neon Sermon (Score: 15.00)
+   Because: energy similarity (+15.0)
+----------------------------------------
+
+5. Night Drive Loop (Score: 14.25)
+   Because: energy similarity (+14.2)
+----------------------------------------
 ```
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+**Screenshot or video** _(optional)_: <!-- Insert a screenshot or demo video link here -->
 
 ---
 
@@ -117,6 +141,3 @@ Write 1 to 2 paragraphs here about what you learned:
 
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
-
-
-
