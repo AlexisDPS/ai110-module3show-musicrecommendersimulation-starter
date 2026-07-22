@@ -115,6 +115,92 @@ Use this section to document the experiments you ran. For example:
 - What happened when you added tempo or valence to the score
 - How did your system behave for different types of users
 
+### High-Energy Pop
+
+```text
+Top recommendations:
+
+1. Sunrise City (Score: 68.80)
+   Because: genre match (+30), mood match (+25), energy similarity (+13.8)
+----------------------------------------
+
+2. Gym Hero (Score: 44.55)
+   Because: genre match (+30), energy similarity (+14.5)
+----------------------------------------
+
+3. Rooftop Lights (Score: 37.90)
+   Because: mood match (+25), energy similarity (+12.9)
+----------------------------------------
+
+4. Storm Runner (Score: 14.85)
+   Because: energy similarity (+14.8)
+----------------------------------------
+
+5. Iron Cathedral (Score: 13.95)
+   Because: energy similarity (+14.0)
+----------------------------------------
+```
+
+### Chill Lofi
+
+```text
+Top recommendations:
+
+1. Library Rain (Score: 69.25)
+   Because: genre match (+30), mood match (+25), energy similarity (+14.2)
+----------------------------------------
+
+2. Midnight Coding (Score: 68.20)
+   Because: genre match (+30), mood match (+25), energy similarity (+13.2)
+----------------------------------------
+
+3. Focus Flow (Score: 43.50)
+   Because: genre match (+30), energy similarity (+13.5)
+----------------------------------------
+
+4. Spacewalk Thoughts (Score: 39.70)
+   Because: mood match (+25), energy similarity (+14.7)
+----------------------------------------
+
+5. Moonlit Waltz (Score: 15.00)
+   Because: energy similarity (+15.0)
+----------------------------------------
+```
+
+### Deep Intense Rock
+
+```text
+Top recommendations:
+
+1. Storm Runner (Score: 69.40)
+   Because: genre match (+30), mood match (+25), energy similarity (+14.4)
+----------------------------------------
+
+2. Gym Hero (Score: 39.70)
+   Because: mood match (+25), energy similarity (+14.7)
+----------------------------------------
+
+3. Iron Cathedral (Score: 14.70)
+   Because: energy similarity (+14.7)
+----------------------------------------
+
+4. Sunrise City (Score: 13.05)
+   Because: energy similarity (+13.1)
+----------------------------------------
+
+5. Neon Sermon (Score: 12.75)
+   Because: energy similarity (+12.8)
+----------------------------------------
+```
+
+### Edge Cases Suggested by AI
+
+Claude suggested several edge cases to test:
+
+- A user profile missing the `genre` key, which would currently cause a `KeyError` because the recommender expects that key to exist.
+- A user profile with out-of-range values, such as `energy = 1.8` or `valence = -2.0`, which could produce incorrect or negative scores because those values are not validated.
+- A user profile with a genre or mood that does not exist in the dataset (for example, `genre = "k-pop"` and `mood = "euphoric"`). In this case, recommendations would rely almost entirely on energy similarity because no songs would match the requested genre or mood.
+
 ---
 
 ## Limitations and Risks
